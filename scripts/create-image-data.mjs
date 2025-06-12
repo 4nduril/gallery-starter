@@ -12,12 +12,8 @@ const RAW_IMG_DIR = process.env.RAW_IMG_DIR;
 const rawImgDir = RAW_IMG_DIR.startsWith("/")
   ? RAW_IMG_DIR
   : pJoin(import.meta.dirname, "..", RAW_IMG_DIR);
-const OUTPUT_DIR = process.env.OUTPUT_DIR;
-const galleryDataPath = pJoin(
-  import.meta.dirname,
-  "../public",
-  process.env.GALLERY_DATA_PATH,
-);
+const OUTPUT_DIR = process.env.IMAGE_DATA_OUTPUT_DIR;
+const GALLERY_DATA_NAME = process.env.GALLERY_DATA_NAME;
 
 const LG_FILES_DIRNAME = "large";
 const SM_FILES_DIRNAME = "thumbnails";
@@ -60,20 +56,18 @@ const log = (s) => () => console.log(s);
  * }
  */
 
-// fileInfoToGalleryInput :: string -> [InfoRecord, InfoRecord] -> GalleryInput
-const fileInfoToGalleryInput =
-  (outputDir) =>
-  ([lgInfoRecord, smInfoRecord]) => {
-    const filenameToLgPath = filenameToPath(pJoin(outputDir, LG_FILES_DIRNAME));
-    const filenameToSmPath = filenameToPath(pJoin(outputDir, SM_FILES_DIRNAME));
+// fileInfoToGalleryInput :: [InfoRecord, InfoRecord] -> GalleryInput
+const fileInfoToGalleryInput = ([lgInfoRecord, smInfoRecord]) => {
+  const filenameToLgPath = filenameToPath(LG_FILES_DIRNAME);
+  const filenameToSmPath = filenameToPath(SM_FILES_DIRNAME);
 
-    return {
-      original: filenameToLgPath(lgInfoRecord.name),
-      src: filenameToSmPath(smInfoRecord.name),
-      width: smInfoRecord.width,
-      height: smInfoRecord.height,
-    };
+  return {
+    original: filenameToLgPath(lgInfoRecord.name),
+    src: filenameToSmPath(smInfoRecord.name),
+    width: smInfoRecord.width,
+    height: smInfoRecord.height,
   };
+};
 
 // getSourcePathsWith :: (string -> Promise<[string]>) -> string -> Promise<[string]>
 const getSourcePathsWith = (readdir) => (inputDir) =>
@@ -92,10 +86,10 @@ const convertFilesWith =
 
     // Create mappers
     const filenameToLgPath = filenameToPath(
-      pJoin(import.meta.dirname, "../public", outputDir, LG_FILES_DIRNAME),
+      pJoin(process.cwd(), outputDir, LG_FILES_DIRNAME),
     );
     const filenameToSmPath = filenameToPath(
-      pJoin(import.meta.dirname, "../public", outputDir, SM_FILES_DIRNAME),
+      pJoin(process.cwd(), outputDir, SM_FILES_DIRNAME),
     );
 
     // makeLgPathPair :: string -> [string, string]
@@ -118,9 +112,10 @@ const convertFilesWith =
 const getSourcePaths = getSourcePathsWith(readdir);
 const convertFiles = convertFilesWith(easyimage);
 const makeImageInfoSuitableForGallery = (data) =>
-  zip(data).map(fileInfoToGalleryInput(OUTPUT_DIR));
+  zip(data).map(fileInfoToGalleryInput);
 const toJSON = (o) => JSON.stringify(o, null, 2);
-const writeToDataFile = (dataString) => writeFile(galleryDataPath, dataString);
+const writeToDataFile = (dataString) =>
+  writeFile(pJoin(process.cwd(), OUTPUT_DIR, GALLERY_DATA_NAME), dataString);
 
 // Actual executing code
 

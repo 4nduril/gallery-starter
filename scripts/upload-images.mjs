@@ -54,6 +54,7 @@ const uploadFolderRecursively = async (
         Key: s3Key,
         Body: fileContent,
         ContentType: mime.lookup(entry.name) || "application/octet-stream",
+        ACL: "public-read", // Make the file publicly readable
       });
       console.log(`Uploaded ${s3Key}`);
     }
@@ -83,6 +84,6 @@ bucketExists(process.env.DO_SPACES_BUCKET_NAME)
     );
     return uploadFolderRecursively(
       process.env.DO_SPACES_BUCKET_NAME,
-      path.join(import.meta.dirname, "../public", process.env.OUTPUT_DIR),
+      path.join(process.cwd(), process.env.IMAGE_DATA_OUTPUT_DIR),
     );
   });
