@@ -1,27 +1,17 @@
 "use client";
 
-import { MasonryPhotoAlbum } from "react-photo-album";
+import { MasonryPhotoAlbum, Photo } from "react-photo-album";
 import "react-photo-album/masonry.css";
-import photos from "../../image-data/grid-gallery-data.json";
 import { FunctionComponent } from "react";
 
 type GalleryProps = {
-  photoBaseUrl: string;
+  photos: Array<Photo & { original: string }>;
 };
 
-export const Gallery: FunctionComponent<GalleryProps> = ({ photoBaseUrl }) => {
-  if (!photos || photos.length === 0) {
-    return <div>No photos available</div>;
-  }
-  const photoData = photos.map((photo) => ({
-    ...photo,
-    src: `${photoBaseUrl}/${photo.src}`,
-    original: `${photoBaseUrl}/${photo.original}`,
-  }));
-
+export const Gallery: FunctionComponent<GalleryProps> = ({ photos }) => {
   return (
     <MasonryPhotoAlbum
-      photos={photoData}
+      photos={photos}
       onClick={({ photo }) => console.log(photo.original)}
     />
   );
