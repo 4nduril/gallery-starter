@@ -6,13 +6,19 @@ import { FunctionComponent } from "react";
 
 type GalleryProps = {
   photos: Array<Photo & { original: string }>;
+  className?: string;
 };
 
-export const Gallery: FunctionComponent<GalleryProps> = ({ photos }) => {
+export const Gallery: FunctionComponent<GalleryProps> = ({
+  photos,
+  className,
+}) => {
   return (
-    <MasonryPhotoAlbum
-      photos={photos}
-      onClick={({ photo }) => console.log(photo.original)}
-    />
+    <div className={className}>
+      <MasonryPhotoAlbum
+        photos={photos}
+        onClick={({ photo }) => console.log(photo.original)}
+      />
+    </div>
   );
 };

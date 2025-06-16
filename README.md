@@ -17,6 +17,11 @@
    DO_SPACES_REGION="your_region" # e.g. "nyc3", "ams3", etc.
    PHOTO_BASE_URL=https://$DO_SPACES_BUCKET_NAME.$DO_SPACES_REGION.digitaloceanspaces.com
    ```
+   Optionally add
+   ```
+   PAGE_TITLE=Your Gallery Title
+   PAGE_DESCRIPTION=Your Gallery Description
+   ```
 6. Create a folder inside the root named `raw-imgs` and add all images there.
 7. Run `npm run build:images:create`.
 8. Run `npm run build:images:upload`.

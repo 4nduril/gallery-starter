@@ -1,4 +1,5 @@
 import { Gallery } from "@/components/Gallery";
+import { PageHeader } from "@/components/PageHeader";
 import { galleryTransform } from "@/utils/schema";
 
 export default async function Home() {
@@ -14,8 +15,11 @@ export default async function Home() {
       return galleryTransform.parse(data);
     });
   return (
-    <main>
-      <Gallery photos={photoData} />
-    </main>
+    <>
+      <PageHeader />
+      <main className="mt-8">
+        <Gallery photos={photoData} className="mx-auto max-w-5xl" />
+      </main>
+    </>
   );
 }
