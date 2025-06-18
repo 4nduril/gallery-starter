@@ -1,5 +1,5 @@
 {
-  "name": "new-york-iceland-2025",
+  "name": "gallery-starter",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -20,12 +20,12 @@
     "react-dom": "^19.0.0",
     "react-photo-album": "^3.1.0",
     "yet-another-react-lightbox": "^3.23.3",
-    "zod": "^3.25.67"
+    "zod": "^3.25.64"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^24",
+    "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "cz-conventional-changelog": "^3.3.0",
