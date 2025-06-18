@@ -13,7 +13,7 @@
 // resizeToHeightAndWriteImageWith :: easyimage -> number -> [string, string] -> Promise<InfoRecord>
 export const resizeToHeightAndWriteImageWith =
   ({ info, resize }) =>
-  (targetHeight) =>
+  targetHeight =>
     function resizeToHeightAndWriteImage([srcPath, dstPath]) {
       return info(srcPath)
         .then(convertDimensionsTo(targetHeight))
@@ -24,8 +24,8 @@ export const resizeToHeightAndWriteImageWith =
             height,
             width,
           }),
-        );
-    };
+        )
+    }
 
 /**
  * Dimensions
@@ -38,8 +38,8 @@ export const resizeToHeightAndWriteImageWith =
 
 // convertDimensionsTo :: number -> Dimensions -> Dimensions
 export const convertDimensionsTo =
-  (toHeight) =>
+  toHeight =>
   ({ width, height }) => ({
     width: Math.round((toHeight * width) / height),
     height: toHeight,
-  });
+  })

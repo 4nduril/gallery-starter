@@ -1,9 +1,7 @@
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 if (!process.env.PHOTO_BASE_URL) {
-  throw new Error(
-    "PHOTO_BASE_URL is not defined in the environment variables.",
-  );
+  throw new Error('PHOTO_BASE_URL is not defined in the environment variables.')
 }
 
 export const photoSchema = z.object({
@@ -11,15 +9,15 @@ export const photoSchema = z.object({
   src: z.string(),
   width: z.number(),
   height: z.number(),
-});
+})
 
-const photoBaseUrl = process.env.PHOTO_BASE_URL;
+const photoBaseUrl = process.env.PHOTO_BASE_URL
 
-export const gallerySchema = z.array(photoSchema);
-export const galleryTransform = gallerySchema.transform((photos) =>
-  photos.map((photo) => ({
+export const gallerySchema = z.array(photoSchema)
+export const galleryTransform = gallerySchema.transform(photos =>
+  photos.map(photo => ({
     ...photo,
     src: `${photoBaseUrl}/${photo.src}`,
     original: `${photoBaseUrl}/${photo.original}`,
   })),
-);
+)
